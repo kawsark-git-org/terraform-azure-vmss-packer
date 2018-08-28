@@ -1,0 +1,63 @@
+{
+    "variables": {
+    "azure_client_id": "{{ env `ARM_CLIENT_ID` }}",
+    "azure_client_secret": "{{ env `ARM_CLIENT_SECRET` }}",
+    "azure_subscription_id": "{{ env `ARM_SUBSCRIPTION_ID` }}",
+    "azure_tenant_id": "{{ env `ARM_TENANT_ID` }}",
+    "azure_resource_group": "{{ env `TF_VAR_packer_resource_group_name` }}",
+    "image_name": "{{ env `TF_VAR_image_name` }}",
+    "azure_location": "{{ env `TF_VAR_location` }}", 
+    "environment": "{{ env `environment` }}",
+    "app": "{{ env `app` }}",
+    "owner": "{{ env `owner` }}",
+    "ttl": "{{ env `ttl` }}"
+    },
+  "builders": [{
+    "type": "azure-arm",
+    "client_id": "{{ user `azure_client_id` }}",	
+    "client_secret": "{{ user `azure_client_secret` }}",
+    "subscription_id": "{{ user `azure_subscription_id` }}",
+    "tenant_id": "{{ user `azure_tenant_id` }}",
+    "managed_image_resource_group_name": "{{ user `azure_resource_group` }}",
+    "location": "{{ user `azure_location` }}",
+    "managed_image_name": "{{ user `image_name` }}",
+    "os_type": "Linux",
+    "image_publisher": "Canonical",
+    "image_offer": "UbuntuServer",
+    "image_sku": "16.04-LTS",
+
+    "azure_tags": {
+        "owner": "{{ user `owner` }}",
+        "environment": "{{ user `environment` }}",
+        "app": "{{ user `app` }}",
+        "ttl": "{{ user `ttl` }}"
+    },
+
+    "vm_size": "Standard_DS2_v2"
+  }],
+  "provisioners": [
+{
+  "type": "file",
+  "source": "ubuntu-setup.sh",
+  "destination": "/tmp/ubuntu-setup.sh"
+},
+{
+    "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "chmod +x /tmp/ubuntu-setup.sh",
+      "/tmp/ubuntu-setup.sh",
+      "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+    ],
+    "inline_shebang": "/bin/sh -x",
+    "type": "shell"
+  },
+{
+    "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+    ],
+    "inline_shebang": "/bin/sh -x",
+    "type": "shell"
+  }
+]
+}
