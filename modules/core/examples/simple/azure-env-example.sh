@@ -8,3 +8,4 @@ export ARM_TENANT_ID=<service_account_tenant_id>
 export TF_VAR_id_rsa_pub="contents-of-id_rsa.pub"
 export TF_VAR_location="EAST US"
 export TF_VAR_core_resource_group_name="azure-vmss-core"
+export TF_VAR_tags='{environment="'${environment}'", app="'${app}'", owner="'${owner}'", ttl="'${ttl}'"}'

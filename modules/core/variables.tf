@@ -9,17 +9,17 @@ variable "location" {
 
 variable "core_resource_group_name" {
   description = "Resource Group name, must be lowercase alphanumeric with hyphens as its used as domain_name_label as well"
-  default     = "kawsar-0823-tf-vmss-packer"
+  default     = "azure-vmss-core"
 }
 
 variable "tags" {
   description = "A set of tags to apply"
   type        = "map"
   default = {
-    environment = "codelab"
+    environment = "dev"
     owner       = "kawsar-at-hashicorp"
     ttl         = "24h"
-    app         = "vmss-packer-stack"
+    app         = "azure-vmss-core"
   }
 }
 

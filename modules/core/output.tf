@@ -3,14 +3,14 @@ output "jumpbox_public_ip" {
 }
 
 output "app_public_ip" {
-    value = "${azurerm_public_ip.vmss.fqdn}"
+    value = "${azurerm_public_ip.app.fqdn}"
 }
 
 output "app_subnet_id" {
-    value = "${azurerm_subnet.vmss.id}"
+    value = "${azurerm_subnet.app.id}"
 }
 
 output "app_public_ip_id" {
-    value = "${azurerm_public_ip.vmss.id}"
+    value = "${azurerm_public_ip.app.id}"
 }
 

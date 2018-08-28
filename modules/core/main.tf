@@ -1,46 +1,46 @@
-resource "azurerm_resource_group" "vmss" {
+resource "azurerm_resource_group" "core" {
   name     = "${var.core_resource_group_name}"
   location = "${var.location}"
   tags     = "${var.tags}"
 }
 
-resource "azurerm_virtual_network" "vmss" {
-  name                = "vmss-vnet"
+resource "azurerm_virtual_network" "core" {
+  name                = "core-vnet"
   address_space       = ["10.0.0.0/16"]
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.vmss.name}"
+  resource_group_name = "${azurerm_resource_group.core.name}"
   tags                = "${var.tags}"
 }
 
-resource "azurerm_subnet" "vmss" {
-  name                 = "vmss-subnet"
-  resource_group_name  = "${azurerm_resource_group.vmss.name}"
-  virtual_network_name = "${azurerm_virtual_network.vmss.name}"
+resource "azurerm_subnet" "app" {
+  name                 = "app-subnet"
+  resource_group_name  = "${azurerm_resource_group.core.name}"
+  virtual_network_name = "${azurerm_virtual_network.core.name}"
   address_prefix       = "10.0.3.0/24"
 }
 
 resource "azurerm_subnet" "bastion" {
   name                 = "bastion-subnet"
-  resource_group_name  = "${azurerm_resource_group.vmss.name}"
-  virtual_network_name = "${azurerm_virtual_network.vmss.name}"
+  resource_group_name  = "${azurerm_resource_group.core.name}"
+  virtual_network_name = "${azurerm_virtual_network.core.name}"
   address_prefix       = "10.0.2.0/24"
 }
 
-resource "azurerm_public_ip" "vmss" {
-  name                         = "vmss-public-ip"
+resource "azurerm_public_ip" "app" {
+  name                         = "app-public-ip"
   location                     = "${var.location}"
-  resource_group_name          = "${azurerm_resource_group.vmss.name}"
+  resource_group_name          = "${azurerm_resource_group.core.name}"
   public_ip_address_allocation = "static"
-  domain_name_label            = "${azurerm_resource_group.vmss.name}"
+  domain_name_label            = "${azurerm_resource_group.core.name}-app"
   tags                         = "${var.tags}"
 }
 
 resource "azurerm_public_ip" "jumpbox" {
   name                         = "jumpbox-public-ip"
   location                     = "${var.location}"
-  resource_group_name          = "${azurerm_resource_group.vmss.name}"
+  resource_group_name          = "${azurerm_resource_group.core.name}"
   public_ip_address_allocation = "static"
-  domain_name_label            = "${azurerm_resource_group.vmss.name}-ssh"
+  domain_name_label            = "${azurerm_resource_group.core.name}-bastion"
 
   tags = "${var.tags}"
 }
@@ -48,7 +48,7 @@ resource "azurerm_public_ip" "jumpbox" {
 resource "azurerm_network_interface" "jumpbox" {
   name                = "jumpbox-nic"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.vmss.name}"
+  resource_group_name = "${azurerm_resource_group.core.name}"
 
   ip_configuration {
     name                          = "IPConfiguration"
@@ -63,7 +63,7 @@ resource "azurerm_network_interface" "jumpbox" {
 resource "azurerm_virtual_machine" "jumpbox" {
   name                  = "jumpbox"
   location              = "${var.location}"
-  resource_group_name   = "${azurerm_resource_group.vmss.name}"
+  resource_group_name   = "${azurerm_resource_group.core.name}"
   network_interface_ids = ["${azurerm_network_interface.jumpbox.id}"]
   vm_size               = "Standard_DS1_v2"
 
