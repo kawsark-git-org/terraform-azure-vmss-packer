@@ -70,9 +70,9 @@ module "acme-app" {
 }
 
 output "redis_cache" {
-  value = "${module.acme_app.redis_cache}"
+  value = "${module.acme-app.redis_cache}"
 }
 
 output "app_public_ip" {
-    value = "${module.acme_app.app_public_ip}"
+    value = "${module.acme-app.app_public_ip}"
 }
