@@ -22,10 +22,4 @@ terraform apply
 ```
 
 3. Provision App module:
-```
-cd modules/app/examples/simple/
-terraform init
-terraform get -update=true
-terraform plan
-terraform apply
-```
+To provision this Module, #2 must be run in Terraform Enterprise. #3 has references to `terraform_remote_state` Data source where it reads the application subnet where the application will be deployed to.
