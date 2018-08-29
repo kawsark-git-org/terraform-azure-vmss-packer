@@ -39,4 +39,5 @@ output "app_public_ip_id" {
     value = "${module.core.app_public_ip_id}"
 }
 
+resource "null_resource" "force_apply" {}
 
