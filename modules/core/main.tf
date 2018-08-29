@@ -26,15 +26,6 @@ resource "azurerm_subnet" "bastion" {
   address_prefix       = "10.0.2.0/24"
 }
 
-resource "azurerm_public_ip" "app" {
-  name                         = "app-public-ip"
-  location                     = "${var.location}"
-  resource_group_name          = "${azurerm_resource_group.core.name}"
-  public_ip_address_allocation = "static"
-  domain_name_label            = "${azurerm_resource_group.core.name}-app"
-  tags                         = "${var.tags}"
-}
-
 resource "azurerm_public_ip" "jumpbox" {
   name                         = "jumpbox-public-ip"
   location                     = "${var.location}"
