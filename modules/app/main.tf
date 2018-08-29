@@ -11,7 +11,7 @@ resource "azurerm_resource_group" "app" {
   tags     = "${var.tags}"
 }
 
-resource "azurerm_public_ip" "app" {
+resource "azurerm_public_ip" "app-public-ip" {
   name                         = "app-public-ip"
   location                     = "${var.location}"
   resource_group_name          = "${azurerm_resource_group.app.name}"
@@ -27,7 +27,7 @@ resource "azurerm_lb" "vmss" {
 
   frontend_ip_configuration {
     name                 = "PublicIPAddress"
-    public_ip_address_id = "${azurerm_public_ip.app.id}"
+    public_ip_address_id = "${azurerm_public_ip.app-public-ip.id}"
   }
 
   tags = "${var.tags}"
