@@ -68,3 +68,11 @@ module "acme-app" {
   id_rsa_pub = "${var.id_rsa_pub}"
   vmss_capacity = "${var.vmss_capacity}"
 }
+
+output "redis_cache" {
+  value = "${module.acme_app.redis_cache}"
+}
+
+output "app_public_ip" {
+    value = "${module.acme_app.app_public_ip}"
+}
