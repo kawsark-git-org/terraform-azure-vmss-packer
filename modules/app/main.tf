@@ -18,7 +18,7 @@ resource "azurerm_lb" "vmss" {
 
   frontend_ip_configuration {
     name                 = "PublicIPAddress"
-    public_ip_address_id = "${data.terraform_remote_state.core_infrastructure.public_ip_address_id}"
+    public_ip_address_id = "${data.terraform_remote_state.core_infrastructure.app_public_ip_id}"
   }
 
   tags = "${var.tags}"
