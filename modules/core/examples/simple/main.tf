@@ -30,3 +30,13 @@ module "core" {
   id_rsa_pub = "${var.id_rsa_pub}"
 }
 
+#Declare outputs so it can be accessed from terraform_remote_state data source
+output "app_subnet_id" {
+    value = "${module.core.app_subnet_id}"
+}
+
+output "app_public_ip_id" {
+    value = "${module.core.app_public_ip_id}"
+}
+
+
