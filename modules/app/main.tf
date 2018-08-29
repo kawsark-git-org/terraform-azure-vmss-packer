@@ -145,6 +145,9 @@ resource "azurerm_redis_cache" "vmss_redis" {
   sku_name            = "Basic"
   enable_non_ssl_port = true
   redis_configuration {
-    rdb_backup_enabled            = false
+    rdb_backup_enabled = false
   }
+
+  #Add delay due to eventual consistency issues
+  depends_on = ["azurerm_lb.vmss"]
 }
