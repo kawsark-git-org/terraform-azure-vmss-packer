@@ -31,7 +31,7 @@ resource "azurerm_public_ip" "jumpbox" {
   location                     = "${var.location}"
   resource_group_name          = "${azurerm_resource_group.core.name}"
   public_ip_address_allocation = "static"
-  domain_name_label            = "${azurerm_resource_group.core.name}-bastion"
+  domain_name_label            = "${lower(azurerm_resource_group.core.name)}-bastion"
 
   tags = "${var.tags}"
 }
