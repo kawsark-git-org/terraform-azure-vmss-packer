@@ -32,6 +32,11 @@ variable "image_name" {
   default     = "vmss-packer-ubuntu1404"
 }
 
+variable "vmss_capacity" {
+  description = "The qty. of VMs in the application VM Scale Set"
+  default     = 2
+}
+
 variable "tags" {
   description = "A set of tags to apply"
   type        = "map"
