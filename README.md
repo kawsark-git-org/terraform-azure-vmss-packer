@@ -18,9 +18,10 @@ There are 3 main components to this deployment:
 ### Build steps:
 
 Please choose either one of the following build steps:
-1. Local builds using packer and TFE-CLI
-   - [Packer local build](packer/README.md)
-   - [Core module local build](modules/core/README.md)
-   - [App module local build](modules/app/README.md)
+1. Local builds using packer and TFE-CLI. 
+   - [Packer local build](packer/README.md#packer-local-build-steps)
+   - [Core module local build](modules/core/README.md#tfe-cli-local-build-steps)
+   - [App module local build](modules/app/README.md#tfe-cli-local-build-steps)
+     - Note: The App module has dependency on Packer and Core and therefore those must be built prior. 
 
-2. [Jenkins build](jenkins/readme.md)
+2. [Jenkins build](jenkins/)
