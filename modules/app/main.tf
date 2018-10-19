@@ -119,6 +119,7 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
 
     ip_configuration {
       name                                   = "IPConfiguration"
+      primary				     = true
       subnet_id                              = "${data.terraform_remote_state.core_infrastructure.app_subnet_id}"
       load_balancer_backend_address_pool_ids = ["${azurerm_lb_backend_address_pool.bpepool.id}"]
     }
